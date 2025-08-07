@@ -10,10 +10,10 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         HStack(content: {
-            CardView(isFaceUp: true)
-            CardView()
-            CardView()
-            CardView()
+            let emojis: [String] = ["☠️", "👻", "🎃", "🕷️", "👹"]
+            ForEach(emojis.indices, id: \.self) { index in
+                CardView(content: emojis[index])
+            }
         })
         .foregroundColor(.orange)
         .padding()
@@ -21,7 +21,10 @@ struct ContentView: View {
 }
 
 struct CardView: View {
-    @State var isFaceUp: Bool = false
+    let content: String
+    @State var isFaceUp: Bool = true
+    
+    
     var body: some View {
         // trailing closure syntax
         ZStack {
@@ -29,7 +32,7 @@ struct CardView: View {
             if isFaceUp {
                 base.fill(.white)
                 base.stroke(lineWidth: 2)
-                Text("😁")
+                Text(content)
                     .font(.largeTitle)
             }
             else {
